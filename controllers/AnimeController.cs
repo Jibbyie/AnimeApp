@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Xml.Linq;
+using EADCA2_Anime.Model;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace EADCA2_Anime.controllers
 {
     public class AnimeController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly AnimeDbContext _context;
 
-        public AnimeController(ApplicationDbContext context)
+        public AnimeController(AnimeDbContext context)
         {
             _context = context;
         }
@@ -20,22 +21,22 @@ namespace EADCA2_Anime.controllers
 
             if (!string.IsNullOrEmpty(query))
             {
-                animes = animes.Where(a => a.Title.Contains(query));
+                animes = animes.Where(a => a.title.Contains(query));
             }
 
             if (sortBy == "trending")
             {
-                animes = animes.OrderByDescending(a => a.Rating);
+                animes = animes.OrderByDescending(a => a.rating);
             }
             // Implement other sorting options
             // Implement other sorting options
             else if (sortBy == "new")
             {
-                animes = animes.OrderByDescending(a => a.Id); // Assuming newer entries have higher IDs
+                animes = animes.OrderByDescending(a => a.anime_id); // Assuming newer entries have higher IDs
             }
             else if (sortBy == "top10Airing")
             {
-                animes = animes.OrderByDescending(a => a.Rating).Take(10); // Assuming top 10 airing animes are based on ratings
+                animes = animes.OrderByDescending(a => a.rating).Take(10); // Assuming top 10 airing animes are based on ratings
             }
 
             return await animes.ToListAsync();
@@ -60,13 +61,13 @@ namespace EADCA2_Anime.controllers
             _context.Animes.Add(anime);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAnime", new { id = anime.Id }, anime);
+            return CreatedAtAction("GetAnime", new { id = anime.anime_id }, anime);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAnime(int id, Anime anime)
         {
-            if (id != anime.Id)
+            if (id != anime.anime_id)
             {
                 return BadRequest();
             }
@@ -109,7 +110,7 @@ namespace EADCA2_Anime.controllers
 
         private bool AnimeExists(int id)
         {
-            return _context.Animes.Any(e => e.Id == id);
+            return _context.Animes.Any(e => e.anime_id == id);
         }
     }
 }
