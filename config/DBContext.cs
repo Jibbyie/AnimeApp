@@ -19,6 +19,30 @@ public class AnimeDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Anime>()
+            .HasKey(an => an.anime_id);
+
+        modelBuilder.Entity<Anime>()
+            .HasOne(an => an.Studio)
+            .WithMany(a => a.Animes)
+            .HasForeignKey(an => an.studio_id);
+
+
+        modelBuilder.Entity<Studio>()
+            .HasKey(st => st.studio_id);
+
+        modelBuilder.Entity<Genre>()
+            .HasKey(ge => ge.genre_id);
+
+
+        modelBuilder.Entity<Staff>()
+            .HasKey(sta => sta.staff_id);
+
+        modelBuilder.Entity<Character>()
+            .HasKey(cha => cha.character_id);
+
+
+
         modelBuilder.Entity<AnimeGenre>()
             .HasKey(ag => new { ag.anime_id, ag.genre_id });
 

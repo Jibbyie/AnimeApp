@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.Configuration;
+
 
 namespace MyNamespace
 {
@@ -21,8 +20,15 @@ namespace MyNamespace
 
     public class Startup
     {
+        public static IConfiguration Configuration { get; private set; }
         public void ConfigureServices(IServiceCollection services)
         {
+            Configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            services.AddDbContext<AnimeDbContext>(options =>
+            options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

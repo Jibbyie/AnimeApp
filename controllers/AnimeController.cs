@@ -1,116 +1,221 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using EADCA2_Anime.Controllers;
 using EADCA2_Anime.Model;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-
-namespace EADCA2_Anime.controllers
+namespace EADCA2_Anime.Controllers
 {
-    public class AnimeController : ControllerBase
+    public abstract class CrudController<TContext, TEntity, TKey> : ControllerBase
+        where TContext : DbContext
+        where TEntity : class
     {
-        private readonly AnimeDbContext _context;
+        private readonly TContext _context;
 
-        public AnimeController(AnimeDbContext context)
+        public CrudController(TContext context)
         {
             _context = context;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Anime>>> GetAnimes(string query, string sortBy)
+        public async Task<ActionResult<IEnumerable<TEntity>>> Get()
         {
-            var animes = _context.Animes.AsQueryable();
-
-            if (!string.IsNullOrEmpty(query))
-            {
-                animes = animes.Where(a => a.title.Contains(query));
-            }
-
-            if (sortBy == "trending")
-            {
-                animes = animes.OrderByDescending(a => a.rating);
-            }
-            // Implement other sorting options
-            // Implement other sorting options
-            else if (sortBy == "new")
-            {
-                animes = animes.OrderByDescending(a => a.anime_id); // Assuming newer entries have higher IDs
-            }
-            else if (sortBy == "top10Airing")
-            {
-                animes = animes.OrderByDescending(a => a.rating).Take(10); // Assuming top 10 airing animes are based on ratings
-            }
-
-            return await animes.ToListAsync();
+            return await _context.Set<TEntity>().ToListAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Anime>> GetAnime(int id)
+        public async Task<ActionResult<TEntity>> Get(int id)
         {
-            var anime = await _context.Animes.FindAsync(id);
+            var entity = await _context.Set<TEntity>().FindAsync(GetEntityId(id));
 
-            if (anime == null)
+            if (entity == null)
             {
                 return NotFound();
             }
 
-            return anime;
+            return entity;
         }
 
         [HttpPost]
-        public async Task<ActionResult<Anime>> PostAnime(Anime anime)
+        public async Task<ActionResult<TEntity>> Post(TEntity entity)
         {
-            _context.Animes.Add(anime);
+            _context.Set<TEntity>().Add(entity);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAnime", new { id = anime.anime_id }, anime);
+            return CreatedAtAction("Get", new { id = GetEntityId(entity) }, entity);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAnime(int id, Anime anime)
+  public async Task<IActionResult> Put(int id, TEntity entity)
+{
+    var existingEntity = await _context.Set<TEntity>().FindAsync(GetEntityId(entity));
+
+    if (existingEntity == null)
+    {
+        return NotFound();
+    }
+
+    if (!AreKeysEqual(GetEntityId(existingEntity), id))
+    {
+        return BadRequest();
+    }
+
+    _context.Entry(existingEntity).State = EntityState.Detached;
+    _context.Entry(entity).State = EntityState.Modified;
+
+    try
+    {
+        await _context.SaveChangesAsync();
+    }
+    catch (DbUpdateConcurrencyException)
+    {
+        if (!EntityExists(id))
         {
-            if (id != anime.anime_id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(anime).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AnimeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return NotFound();
         }
+        else
+        {
+            throw;
+        }
+    }
+
+    return NoContent();
+}
+
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAnime(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var anime = await _context.Animes.FindAsync(id);
-            if (anime == null)
+            var entity = await _context.Set<TEntity>().FindAsync(GetEntityId(id));
+            if (entity == null)
             {
                 return NotFound();
             }
 
-            _context.Animes.Remove(anime);
+            _context.Set<TEntity>().Remove(entity);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool AnimeExists(int id)
+        private bool AreKeysEqual(TKey key1, int key2)
         {
-            return _context.Animes.Any(e => e.anime_id == id);
+            if (typeof(TKey) == typeof(int))
+            {
+                // If TKey is int, just compare the values
+                return EqualityComparer<TKey>.Default.Equals(key1, (TKey)(object)key2);
+            }
+            else if (typeof(TKey) == typeof(ValueTuple<int, int>))
+            {
+                // If TKey is a tuple of ints, compare both values in the tuple
+                var tupleKey = (ValueTuple<int, int>)(object)key1;
+                return tupleKey.Item1 == key2 || tupleKey.Item2 == key2;
+            }
+            else
+            {
+                // Handle other TKey types here
+                throw new NotSupportedException($"Type {typeof(TKey)} is not supported for this comparison method.");
+            }
         }
+
+
+        protected abstract bool EntityExists(int id);
+
+        protected abstract TKey GetEntityId(TEntity entity);
+
+        protected abstract TKey GetEntityId(int id);
+    }
+}
+
+
+[ApiController]
+[Route("api/[controller]")]
+public class GenreController : CrudController<AnimeDbContext, Genre, int>
+{
+    public GenreController(AnimeDbContext context) : base(context)
+    {
+    }
+
+    protected override bool EntityExists(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override int GetEntityId(Genre genre)
+    {
+        return genre.genre_id;
+    }
+
+    protected override int GetEntityId(int id)
+    {
+        return id;
+    }
+}
+
+[ApiController]
+[Route("[controller]")]
+public class AnimeController : CrudController<AnimeDbContext, Anime, int>
+{
+    public AnimeController(AnimeDbContext context) : base(context) { }
+
+    protected override int GetEntityId(Anime entity)
+    {
+        return entity.anime_id;
+    }
+
+    protected override bool EntityExists(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override int GetEntityId(int id)
+    {
+        return id;
+    }
+}
+
+[ApiController]
+[Route("[controller]")]
+public class StudioController : CrudController<AnimeDbContext, Studio, int>
+{
+    public StudioController(AnimeDbContext context) : base(context) { }
+
+    protected override int GetEntityId(Studio entity)
+    {
+        return entity.studio_id;
+    }
+
+    protected override bool EntityExists(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override int GetEntityId(int id)
+    {
+        return id;
+    }
+}
+
+
+[ApiController]
+[Route("[controller]")]
+public class AnimeGenreController : CrudController<AnimeDbContext, AnimeGenre, (int, int)>
+{
+    public AnimeGenreController(AnimeDbContext context) : base(context) { }
+
+    protected override (int, int) GetEntityId(AnimeGenre entity)
+    {
+        return (entity.anime_id, entity.genre_id);
+    }
+
+    protected override bool EntityExists(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override (int, int) GetEntityId(int id)
+    {
+        throw new NotImplementedException();
     }
 }
