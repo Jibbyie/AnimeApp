@@ -1,5 +1,7 @@
 ﻿using EADCA2_Anime.Controllers;
+using EADCA2_Anime.Interfaces;
 using EADCA2_Anime.Model;
+using EADCA2_Anime.NewFolder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -17,6 +19,7 @@ namespace EADCA2_Anime.Controllers
         {
             _context = context;
         }
+
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TEntity>>> Get()
@@ -125,6 +128,8 @@ namespace EADCA2_Anime.Controllers
         protected abstract TKey GetEntityId(TEntity entity);
 
         protected abstract TKey GetEntityId(int id);
+
+
     }
 }
 
@@ -151,13 +156,61 @@ public class GenreController : CrudController<AnimeDbContext, Genre, int>
     {
         return id;
     }
+
 }
 
 [ApiController]
 [Route("[controller]")]
 public class AnimeController : CrudController<AnimeDbContext, Anime, int>
 {
-    public AnimeController(AnimeDbContext context) : base(context) { }
+    private readonly AnimeDbContext _context;
+    public AnimeController(AnimeDbContext context) : base(context) { _context = context; }
+
+
+    [HttpGet("name/{name}")]
+    public async Task<ActionResult<Anime>> GetAnimeByName(string name)
+    {
+
+        var entity = await _context.Set<Anime>().Where(e => EF.Functions.ILike(e.title, $"%{name}%")).FirstOrDefaultAsync();
+
+        if (entity == null)
+        {
+            return NotFound();
+        }
+
+        return entity;
+    }
+
+
+    [HttpGet("genre/{name}")]
+    public async Task<ActionResult<IEnumerable<Anime>>> GetAnimeByGenre(string name)
+    {
+
+        var entities = await _context.Set<Anime>().Where(e => EF.Functions.ILike(e.Genre.name, $"%{name}%")).ToListAsync();
+
+        if (entities == null)
+        {
+            return NotFound();
+        }
+
+        return entities;
+    }
+
+
+    [HttpGet("rating/{rating}")]
+    public async Task<ActionResult<IEnumerable<Anime>>> GetAnimeByRating(double rating)
+    {
+
+        var entities = await _context.Set<Anime>().Where(e => e.rating >= rating).ToListAsync();
+
+        if (entities == null)
+        {
+            return NotFound();
+        }
+
+        return entities;
+    }
+
 
     protected override int GetEntityId(Anime entity)
     {
@@ -173,6 +226,8 @@ public class AnimeController : CrudController<AnimeDbContext, Anime, int>
     {
         return id;
     }
+
+
 }
 
 [ApiController]
@@ -195,6 +250,7 @@ public class StudioController : CrudController<AnimeDbContext, Studio, int>
     {
         return id;
     }
+
 }
 
 
@@ -219,6 +275,7 @@ public class StaffController : CrudController<AnimeDbContext, Staff, int>
     {
         return id;
     }
+
 }
 
 [ApiController]
@@ -241,4 +298,5 @@ public class CharacterController : CrudController<AnimeDbContext, Character, int
     {
         return id;
     }
+
 }
