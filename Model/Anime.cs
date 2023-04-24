@@ -1,4 +1,6 @@
-﻿namespace EADCA2_Anime.Model
+﻿using System.Text.Json.Serialization;
+
+namespace EADCA2_Anime.Model
 {
     public class Anime
     {
@@ -13,9 +15,13 @@
 
         // Navigation properties
         public int studio_id { get; set; }
+        [JsonIgnore]
         public Studio Studio { get; set; }
+        [JsonIgnore]
         public ICollection<AnimeGenre> AnimeGenre { get; set; }
+        [JsonIgnore]
         public ICollection<AnimeCharacter> AnimeCharacter { get; set; }
+        [JsonIgnore]
         public ICollection<AnimeStaff> AnimeStaff { get; set; }
 
 
