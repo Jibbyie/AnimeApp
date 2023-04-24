@@ -1,10 +1,12 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace EADCA2_Anime.Model
 {
     public class Anime
     {
         public int anime_id { get; set; }
+        [Required]
         public string title { get; set; }
         public string synopsis { get; set; }
         public DateTime start_date { get; set; }
@@ -14,15 +16,14 @@ namespace EADCA2_Anime.Model
         public Double rating { get; set; }
 
         // Navigation properties
-        public int studio_id { get; set; }
+        public int? studio_id { get; set; }
+        public int? genre_id { get; set; }
         [JsonIgnore]
-        public Studio Studio { get; set; }
+        public Studio? Studio { get; set; }
         [JsonIgnore]
-        public ICollection<AnimeGenre> AnimeGenre { get; set; }
+        public Genre? Genre { get; set; }
         [JsonIgnore]
-        public ICollection<AnimeCharacter> AnimeCharacter { get; set; }
-        [JsonIgnore]
-        public ICollection<AnimeStaff> AnimeStaff { get; set; }
+        public List<Character>? Character { get; set; }
 
 
     }
