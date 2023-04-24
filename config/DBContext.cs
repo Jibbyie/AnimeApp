@@ -24,7 +24,7 @@ public class AnimeDbContext : DbContext
 
         modelBuilder.Entity<Anime>()
             .HasOne(an => an.Studio)
-            .WithMany(a => a.Anime)
+            .WithMany(a => a.Animes)
             .HasForeignKey(an => an.studio_id);
 
 
