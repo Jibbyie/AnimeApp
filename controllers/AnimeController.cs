@@ -198,15 +198,16 @@ public class StudioController : CrudController<AnimeDbContext, Studio, int>
 }
 
 
+
 [ApiController]
 [Route("[controller]")]
-public class AnimeGenreController : CrudController<AnimeDbContext, AnimeGenre, (int, int)>
+public class StaffController : CrudController<AnimeDbContext, Staff, int>
 {
-    public AnimeGenreController(AnimeDbContext context) : base(context) { }
+    public StaffController(AnimeDbContext context) : base(context) { }
 
-    protected override (int, int) GetEntityId(AnimeGenre entity)
+    protected override int GetEntityId(Staff entity)
     {
-        return (entity.anime_id, entity.genre_id);
+        return entity.staff_id;
     }
 
     protected override bool EntityExists(int id)
@@ -214,8 +215,30 @@ public class AnimeGenreController : CrudController<AnimeDbContext, AnimeGenre, (
         throw new NotImplementedException();
     }
 
-    protected override (int, int) GetEntityId(int id)
+    protected override int GetEntityId(int id)
+    {
+        return id;
+    }
+}
+
+[ApiController]
+[Route("[controller]")]
+public class CharacterController : CrudController<AnimeDbContext, Character, int>
+{
+    public CharacterController(AnimeDbContext context) : base(context) { }
+
+    protected override int GetEntityId(Character entity)
+    {
+        return entity.character_id;
+    }
+
+    protected override bool EntityExists(int id)
     {
         throw new NotImplementedException();
+    }
+
+    protected override int GetEntityId(int id)
+    {
+        return id;
     }
 }
