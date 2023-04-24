@@ -8,7 +8,7 @@ public class AnimeDbContext : DbContext
         : base(options)
     { }
 
-    public DbSet<Anime> Animes { get; set; }
+    public DbSet<Anime> Anime { get; set; }
     public DbSet<Studio> Studios { get; set; }
     public DbSet<Genre> Genres { get; set; }
     public DbSet<AnimeGenre> AnimeGenres { get; set; }
@@ -24,7 +24,7 @@ public class AnimeDbContext : DbContext
 
         modelBuilder.Entity<Anime>()
             .HasOne(an => an.Studio)
-            .WithMany(a => a.Animes)
+            .WithMany(a => a.Anime)
             .HasForeignKey(an => an.studio_id);
 
 
