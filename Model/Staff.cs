@@ -6,7 +6,7 @@
         public string name { get; set; }
         public string position { get; set; }
 
-        public List<AnimeStaff> AnimeStaffs { get; set; }
+        public List<AnimeStaff> AnimeStaff { get; set; }
     }
 
 }

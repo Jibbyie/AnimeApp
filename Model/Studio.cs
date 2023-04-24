@@ -5,7 +5,7 @@
         public int studio_id { get; set; }
         public string name { get; set; }
 
-        public List<Anime> Animes { get; set; }
+        public List<Anime> Anime { get; set; }
     }
 
 }

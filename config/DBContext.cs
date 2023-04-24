@@ -9,13 +9,13 @@ public class AnimeDbContext : DbContext
     { }
 
     public DbSet<Anime> Anime { get; set; }
-    public DbSet<Studio> Studios { get; set; }
+    public DbSet<Studio> Studio { get; set; }
     public DbSet<Genre> Genres { get; set; }
-    public DbSet<AnimeGenre> AnimeGenres { get; set; }
-    public DbSet<Character> Characters { get; set; }
-    public DbSet<AnimeCharacter> AnimeCharacters { get; set; }
-    public DbSet<Staff> Staffs { get; set; }
-    public DbSet<AnimeStaff> AnimeStaffs { get; set; }
+    public DbSet<AnimeGenre> AnimeGenre { get; set; }
+    public DbSet<Character> Character { get; set; }
+    public DbSet<AnimeCharacter> AnimeCharacter { get; set; }
+    public DbSet<Staff> Staff { get; set; }
+    public DbSet<AnimeStaff> AnimeStaff { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -24,7 +24,7 @@ public class AnimeDbContext : DbContext
 
         modelBuilder.Entity<Anime>()
             .HasOne(an => an.Studio)
-            .WithMany(a => a.Animes)
+            .WithMany(a => a.Anime)
             .HasForeignKey(an => an.studio_id);
 
 
@@ -48,12 +48,12 @@ public class AnimeDbContext : DbContext
 
         modelBuilder.Entity<AnimeGenre>()
             .HasOne(ag => ag.Anime)
-            .WithMany(a => a.AnimeGenres)
+            .WithMany(a => a.AnimeGenre)
             .HasForeignKey(ag => ag.anime_id);
 
         modelBuilder.Entity<AnimeGenre>()
             .HasOne(ag => ag.Genre)
-            .WithMany(g => g.AnimeGenres)
+            .WithMany(g => g.AnimeGenre)
             .HasForeignKey(ag => ag.genre_id);
 
         modelBuilder.Entity<AnimeCharacter>()
@@ -61,12 +61,12 @@ public class AnimeDbContext : DbContext
 
         modelBuilder.Entity<AnimeCharacter>()
             .HasOne(ac => ac.Anime)
-            .WithMany(a => a.AnimeCharacters)
+            .WithMany(a => a.AnimeCharacter)
             .HasForeignKey(ac => ac.anime_id);
 
         modelBuilder.Entity<AnimeCharacter>()
             .HasOne(ac => ac.Character)
-            .WithMany(c => c.AnimeCharacters)
+            .WithMany(c => c.AnimeCharacter)
             .HasForeignKey(ac => ac.character_id);
 
         modelBuilder.Entity<AnimeStaff>()
@@ -74,12 +74,12 @@ public class AnimeDbContext : DbContext
 
         modelBuilder.Entity<AnimeStaff>()
             .HasOne(ast => ast.Anime)
-            .WithMany(a => a.AnimeStaffs)
+            .WithMany(a => a.AnimeStaff)
             .HasForeignKey(ast => ast.anime_id);
 
         modelBuilder.Entity<AnimeStaff>()
             .HasOne(ast => ast.Staff)
-            .WithMany(s => s.AnimeStaffs)
+            .WithMany(s => s.AnimeStaff)
             .HasForeignKey(ast => ast.staff_id);
     }
 }

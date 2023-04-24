@@ -6,7 +6,7 @@
         public string name { get; set; }
         public string image_url { get; set; }
 
-        public List<AnimeCharacter> AnimeCharacters { get; set; }
+        public List<AnimeCharacter> AnimeCharacter { get; set; }
     }
 
 }

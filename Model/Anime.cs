@@ -9,14 +9,14 @@
         public DateTime end_date { get; set; }
         public string season { get; set; }
         public int duration { get; set; }
-        public string rating { get; set; }
+        public Double rating { get; set; }
 
         // Navigation properties
         public int studio_id { get; set; }
         public Studio Studio { get; set; }
-        public ICollection<AnimeGenre> AnimeGenres { get; set; }
-        public ICollection<AnimeCharacter> AnimeCharacters { get; set; }
-        public ICollection<AnimeStaff> AnimeStaffs { get; set; }
+        public ICollection<AnimeGenre> AnimeGenre { get; set; }
+        public ICollection<AnimeCharacter> AnimeCharacter { get; set; }
+        public ICollection<AnimeStaff> AnimeStaff { get; set; }
 
 
     }
