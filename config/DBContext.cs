@@ -1,6 +1,5 @@
 ﻿using EADCA2_Anime.Model;
 using Microsoft.EntityFrameworkCore;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
 using System;
 
 public class AnimeDbContext : DbContext
@@ -17,6 +16,7 @@ public class AnimeDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.HasDefaultSchema("public");
         modelBuilder.Entity<Anime>()
             .HasKey(an => an.anime_id);
 

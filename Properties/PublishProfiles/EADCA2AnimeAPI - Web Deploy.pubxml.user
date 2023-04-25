@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project>
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA9o6mZ9sz1ESYqX5nxvZonwAAAAACAAAAAAAQZgAAAAEAACAAAACVIyxrmN4J2eF+pCfV3h+qAv9bvAjUOupcEt3B+/PIVAAAAAAOgAAAAAIAACAAAACONVUrQuiv/4LMS1AtECBSvkHtCEzkjNFlXCH9mNTpoYAAAAAneehpMhBgNCvezbbC6TzLKkbWazEvS5PVBzoWmHZi5HQ4daNsBSLOXDqlAWI6qspP+1wpUIS2lEmRuBUjdm7+PwUhyN4Up83LTDEEO06/P0gm4YFZvAA/adYxA1z0Eo3V4jdhh9RUfJBfPr4rd7HNplJu6IJ0hNLwHaWrnaNRxkAAAABl+BFze4FfUe2A8Ec0aas3IMMbhew1z2al+4sKUIBoTJmKpsYZ/K5dGEjT4IUJHpwGAyznraDZYU8HRDHFpkbG</EncryptedPassword>
+    <History>False|2023-04-25T10:44:45.3774456Z;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <EFMigrations Include="AnimeDbContext">
+      <Value>Data Source=tcp:eadca2-animedbserver.database.windows.net,1433%3bInitial Catalog=EADCA2_Anime_db%3bUser Id=jibby%40eadca2-animedbserver%3bPassword=AuraKingdom1</Value>
+    </EFMigrations>
+  </ItemGroup>
+</Project>

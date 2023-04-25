@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "mssql1": {
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/eadca2-animedbserver/databases/EADCA2_Anime_db",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:DefaultConnection"
+    },
+    "apis1": {
+      "ignored": "true",
+      "type": "apis"
+    },
+    "apis2": {
+      "ignored": "true",
+      "type": "apis.azure"
+    }
+  }
+}

@@ -1,7 +1,5 @@
 ﻿using EADCA2_Anime.Controllers;
-using EADCA2_Anime.Interfaces;
 using EADCA2_Anime.Model;
-using EADCA2_Anime.NewFolder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -171,7 +169,7 @@ public class AnimeController : CrudController<AnimeDbContext, Anime, int>
     public async Task<ActionResult<Anime>> GetAnimeByName(string name)
     {
 
-        var entity = await _context.Set<Anime>().Where(e => EF.Functions.ILike(e.title, $"%{name}%")).FirstOrDefaultAsync();
+        var entity = await _context.Set<Anime>().Where(e => EF.Functions.Like(e.title, $"%{name}%")).FirstOrDefaultAsync();
 
         if (entity == null)
         {
@@ -186,7 +184,7 @@ public class AnimeController : CrudController<AnimeDbContext, Anime, int>
     public async Task<ActionResult<IEnumerable<Anime>>> GetAnimeByGenre(string name)
     {
 
-        var entities = await _context.Set<Anime>().Where(e => EF.Functions.ILike(e.Genre.name, $"%{name}%")).ToListAsync();
+        var entities = await _context.Set<Anime>().Where(e => EF.Functions.Like(e.Genre.name, $"%{name}%")).ToListAsync();
 
         if (entities == null)
         {

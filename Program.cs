@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Configuration;
-
+using Microsoft.Data.SqlClient;
 
 namespace MyNamespace
 {
@@ -28,7 +28,7 @@ namespace MyNamespace
                 .Build();
 
             services.AddDbContext<AnimeDbContext>(options =>
-            options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING")));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
