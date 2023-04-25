@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jibby\\AnimeApp\\EADCA2_Anime.csproj": {}
+    "C:\\Users\\Malik\\Desktop\\AnimeApp\\EADCA2_Anime.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jibby\\AnimeApp\\EADCA2_Anime.csproj": {
+    "C:\\Users\\Malik\\Desktop\\AnimeApp\\EADCA2_Anime.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jibby\\AnimeApp\\EADCA2_Anime.csproj",
+        "projectUniqueName": "C:\\Users\\Malik\\Desktop\\AnimeApp\\EADCA2_Anime.csproj",
         "projectName": "EADCA2_Anime",
-        "projectPath": "C:\\Users\\jibby\\AnimeApp\\EADCA2_Anime.csproj",
-        "packagesPath": "C:\\Users\\jibby\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jibby\\AnimeApp\\obj\\",
+        "projectPath": "C:\\Users\\Malik\\Desktop\\AnimeApp\\EADCA2_Anime.csproj",
+        "packagesPath": "C:\\Users\\Malik\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Malik\\Desktop\\AnimeApp\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\jibby\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Malik\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,7 +22,8 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://packages.nuget.org": {}
         },
         "frameworks": {
           "net6.0": {
@@ -44,10 +41,6 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
-            "Microsoft.Data.SqlClient": {
-              "target": "Package",
-              "version": "[5.1.1, )"
-            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[7.0.5, )"
@@ -67,6 +60,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[7.0.5, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[7.0.4, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -92,7 +89,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }

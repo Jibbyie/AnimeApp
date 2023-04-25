@@ -1,12 +1,15 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace EADCA2_Anime.Migrations
 {
+    /// <inheritdoc />
     public partial class InitialCreate : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
@@ -17,9 +20,9 @@ namespace EADCA2_Anime.Migrations
                 schema: "public",
                 columns: table => new
                 {
-                    genre_id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    genre_id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,9 +34,9 @@ namespace EADCA2_Anime.Migrations
                 schema: "public",
                 columns: table => new
                 {
-                    studio_id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    studio_id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -45,17 +48,17 @@ namespace EADCA2_Anime.Migrations
                 schema: "public",
                 columns: table => new
                 {
-                    anime_id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    synopsis = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    start_date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    end_date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    season = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    duration = table.Column<int>(type: "int", nullable: false),
-                    rating = table.Column<double>(type: "float", nullable: false),
-                    studio_id = table.Column<int>(type: "int", nullable: true),
-                    genre_id = table.Column<int>(type: "int", nullable: true)
+                    anime_id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    title = table.Column<string>(type: "text", nullable: false),
+                    synopsis = table.Column<string>(type: "text", nullable: false),
+                    start_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    end_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    season = table.Column<string>(type: "text", nullable: false),
+                    duration = table.Column<int>(type: "integer", nullable: false),
+                    rating = table.Column<double>(type: "double precision", nullable: false),
+                    studio_id = table.Column<int>(type: "integer", nullable: true),
+                    genre_id = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -79,11 +82,11 @@ namespace EADCA2_Anime.Migrations
                 schema: "public",
                 columns: table => new
                 {
-                    staff_id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    position = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    studio_id = table.Column<int>(type: "int", nullable: true)
+                    staff_id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    position = table.Column<string>(type: "text", nullable: false),
+                    studio_id = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -101,11 +104,11 @@ namespace EADCA2_Anime.Migrations
                 schema: "public",
                 columns: table => new
                 {
-                    character_id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    image_url = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    anime_id = table.Column<int>(type: "int", nullable: true)
+                    character_id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    image_url = table.Column<string>(type: "text", nullable: false),
+                    anime_id = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -143,6 +146,7 @@ namespace EADCA2_Anime.Migrations
                 column: "studio_id");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Data.SqlClient;
+using Npgsql.EntityFrameworkCore;
 
 namespace MyNamespace
 {
@@ -15,6 +15,7 @@ namespace MyNamespace
         public static IWebHostBuilder CreateHostBuilder(string[] args) =>
             new WebHostBuilder()
                 .UseKestrel()
+                .UseUrls("https://*")
                 .UseStartup<Startup>();
     }
 
@@ -28,7 +29,7 @@ namespace MyNamespace
                 .Build();
 
             services.AddDbContext<AnimeDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING")));
+            options.UseNpgsql(Configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING")));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

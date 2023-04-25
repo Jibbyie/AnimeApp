@@ -4,6 +4,18 @@ using System;
 
 public class AnimeDbContext : DbContext
 {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        IConfigurationRoot configuration = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json")
+            .Build();
+
+        string connectionString = configuration.GetConnectionString("AZURE_SQL_CONNECTIONSTRING");
+
+        optionsBuilder.UseNpgsql(connectionString);
+    }
+
     public AnimeDbContext(DbContextOptions<AnimeDbContext> options)
         : base(options)
     { }
