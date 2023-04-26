@@ -15,7 +15,7 @@ namespace MyNamespace
         public static IWebHostBuilder CreateHostBuilder(string[] args) =>
             new WebHostBuilder()
                 .UseKestrel()
-                .UseUrls("https://*")
+                .UseUrls("http://*")
                 .UseStartup<Startup>();
     }
 
@@ -39,16 +39,34 @@ namespace MyNamespace
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
+            app.Use(async (context, next) =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                var remoteIp = context.Connection.RemoteIpAddress;
+
+                // Allow access if the request is coming from your IP address
+                var remoteIpAddresses = Configuration.GetSection("RemoteIpAdresses").Get<string[]>();
+
+                if (context.Request.Path.StartsWithSegments("/swagger") && !remoteIpAddresses.Contains(remoteIp.ToString()))
+                {
+                    context.Response.StatusCode = 403;
+                    await context.Response.WriteAsync("Access denied to Swagger.");
+                }
+                else
+                {
+                    await next();
+                }
             });
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
 
             app.UseRouting();
 
@@ -57,5 +75,6 @@ namespace MyNamespace
                 endpoints.MapControllers();
             });
         }
+
     }
 }
