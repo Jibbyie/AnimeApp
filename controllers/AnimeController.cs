@@ -133,7 +133,7 @@ namespace EADCA2_Anime.Controllers
 
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 public class GenreController : CrudController<AnimeDbContext, Genre, int>
 {
     public GenreController(AnimeDbContext context) : base(context)
