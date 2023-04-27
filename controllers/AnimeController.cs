@@ -169,7 +169,7 @@ public class AnimeController : CrudController<AnimeDbContext, Anime, int>
     public async Task<ActionResult<Anime>> GetAnimeByName(string name)
     {
 
-        var entity = await _context.Set<Anime>().Where(e => EF.Functions.Like(e.title, $"%{name}%")).FirstOrDefaultAsync();
+        var entity = await _context.Set<Anime>().Where(e => EF.Functions.Like(e.title.ToLower(), $"%{name}%".ToLower())).FirstOrDefaultAsync();
 
         if (entity == null)
         {
@@ -184,7 +184,7 @@ public class AnimeController : CrudController<AnimeDbContext, Anime, int>
     public async Task<ActionResult<IEnumerable<Anime>>> GetAnimeByGenre(string name)
     {
 
-        var entities = await _context.Set<Anime>().Where(e => EF.Functions.Like(e.Genre.name, $"%{name}%")).ToListAsync();
+        var entities = await _context.Set<Anime>().Where(e => EF.Functions.Like(e.Genre.name.ToLower(), $"%{name}%".ToLower())).ToListAsync();
 
         if (entities == null)
         {
