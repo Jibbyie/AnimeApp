@@ -1,0 +1,43 @@
+{
+  "animeListScreen": {
+    "maintitle": "Anime Database",
+    "title": "Title",
+    "search_by_title": "Search by title...",
+    "search_anime": "Search Anime",
+    "search_staff": "Search Staff",
+    "add_anime": "Add Anime",
+    "name": "Name",
+    "update_rating": "Update Rating",
+    "search_characters": "Search Characters",
+    "id": "ID",
+    "synopsis": "Synopsis",
+    "studio": "Studio",
+    "genres": "Genres",
+    "input_id": "Input ID",
+    "input_title": "Input Title",
+    "input_synopsis": "Input Synopsis",
+    "input_start_date": "Input Start Date (YYYY-MM-DD e.g. 2020-01-01)",
+    "input_end_date": "Input End Date (YYYY-MM-DD e.g. 2021-02-02)",
+    "input_season": "Input Season",
+    "input_new_rating": "Input New Rating (1-10)",
+    "input_duration": "Input Duration (in minutes)",
+    "input_rating": "Input Rating (1-10)",
+    "input_studio_id": "Input Studio ID (1 - 14)",
+    "input_genre_id": "Input Genre ID (1 - 14)",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "season": "Season",
+    "duration": "Duration",
+    "rating": "Rating",
+    "studioID": "Studio ID",
+    "genreID": "Genre ID",
+    "animeID": "Anime ID",
+    "position": "Position"
+  },
+  "header": {
+    "list_anime": "List Anime",
+    "anime_details": "Anime Details",
+    "character_details": "Character Details",
+    "add_new_anime": "Add New Anime"
+  }
+}

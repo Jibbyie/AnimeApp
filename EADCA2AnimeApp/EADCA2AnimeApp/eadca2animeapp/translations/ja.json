@@ -1,0 +1,43 @@
+{
+  "animeListScreen": {
+    "maintitle": "アニメデータベース",
+    "title": "タイトル",
+    "search_by_title": "タイトルで検索...",
+    "search_anime": "アニメを検索",
+    "search_staff": "スタッフを検索",
+    "add_anime": "アニメを追加",
+    "name": "名前",
+    "update_rating": "評価を更新",
+    "search_characters": "キャラクターを検索",
+    "id": "ID",
+    "synopsis": "あらすじ",
+    "studio": "スタジオ",
+    "genres": "ジャンル",
+    "input_id": "入力ID",
+    "input_title": "入力タイトル",
+    "input_synopsis": "入力あらすじ",
+    "input_start_date": "入力開始日 (YYYY-MM-DD 例: 2020-01-01)",
+    "input_end_date": "入力終了日 (YYYY-MM-DD 例: 2021-02-02)",
+    "input_season": "入力シーズン",
+    "input_new_rating": "新しい評価を入力 (1-10)",
+    "input_duration": "入力期間 (分単位)",
+    "input_rating": "入力評価 (1-10)",
+    "input_studio_id": "入力スタジオID (1 - 14)",
+    "input_genre_id": "入力ジャンルID (1 - 14)",
+    "startDate": "開始日",
+    "endDate": "終了日",
+    "season": "シーズン",
+    "duration": "期間",
+    "rating": "評価",
+    "studioID": "スタジオID",
+    "genreID": "ジャンルID",
+    "animeID": "アニメID",
+    "position": "位置"
+  },
+  "header": {
+    "list_anime": "アニメ一覧",
+    "anime_details": "アニメ詳細",
+    "character_details": "キャラクター詳細",
+    "add_new_anime": "新しいアニメを追加"
+  }
+}
