@@ -1,4 +1,4 @@
-# AnimeApp
+# AnimeApp (We had to publish the app all at once since we mistakenly worked on separate githubs and didn't realise we had to amalgamate it all in the one repo.)
 Our React Native application enables users to search, display, and manage information about anime, characters, and staff. It uses the React Hooks API, React Navigation library, and react-i18next for translations, supporting both English and Japanese languages. The application fetches data from a remote API and provides functionalities such as searching, adding, and deleting anime.
 
 The AddAnime React Native component includes a form for adding an anime to the database with details such as title, synopsis, start date, end date, season, duration, rating, studio ID, and genre ID. The code utilizes GET requests to fetch the highest anime ID and validate the entered ID, while a POST request adds a new anime to the database upon successful input validation.
