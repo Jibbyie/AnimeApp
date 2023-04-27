@@ -2,6 +2,7 @@
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Configuration;
 using Npgsql.EntityFrameworkCore;
+using System.Net;
 
 namespace MyNamespace
 {
@@ -14,8 +15,10 @@ namespace MyNamespace
 
         public static IWebHostBuilder CreateHostBuilder(string[] args) =>
             new WebHostBuilder()
-                .UseKestrel()
-                .UseUrls("http://*")
+                .UseKestrel(options =>
+                {
+                    options.Listen(IPAddress.Any, 5000); // listen on all available network interfaces on port 5000
+                })
                 .UseStartup<Startup>();
     }
 
@@ -39,23 +42,6 @@ namespace MyNamespace
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.Use(async (context, next) =>
-            {
-                var remoteIp = context.Connection.RemoteIpAddress;
-
-                // Allow access if the request is coming from your IP address
-                var remoteIpAddresses = Configuration.GetSection("RemoteIpAdresses").Get<string[]>();
-
-                if (context.Request.Path.StartsWithSegments("/swagger") && !remoteIpAddresses.Contains(remoteIp.ToString()))
-                {
-                    context.Response.StatusCode = 403;
-                    await context.Response.WriteAsync("Access denied to Swagger.");
-                }
-                else
-                {
-                    await next();
-                }
-            });
 
             if (env.IsDevelopment())
             {
